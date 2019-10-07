@@ -58,7 +58,6 @@ export class Sidebar{
 		this.initSettings();
 		
 		$('#potree_version_number').html(Potree.version.major + "." + Potree.version.minor + Potree.version.suffix);
-		$('.perfect_scrollbar').perfectScrollbar();
 	}
 
 		
@@ -702,7 +701,7 @@ export class Sidebar{
 
 			sldReturnNumber.slider({
 				range: true,
-				min: 1, max: 7, step: 1,
+				min: 0, max: 7, step: 1,
 				values: [0, 7],
 				slide: (event, ui) => {
 					this.viewer.setFilterReturnNumberRange(ui.values[0], ui.values[1])
@@ -727,7 +726,7 @@ export class Sidebar{
 
 			sldNumberOfReturns.slider({
 				range: true,
-				min: 1, max: 7, step: 1,
+				min: 0, max: 7, step: 1,
 				values: [0, 7],
 				slide: (event, ui) => {
 					this.viewer.setFilterNumberOfReturnsRange(ui.values[0], ui.values[1])
@@ -807,17 +806,9 @@ export class Sidebar{
 			elClassificationList.append(element);
 		};
 
-		addClassificationItem(0, 'never classified');
-		addClassificationItem(1, 'unclassified');
-		addClassificationItem(2, 'ground');
-		addClassificationItem(3, 'low vegetation');
-		addClassificationItem(4, 'medium vegetation');
-		addClassificationItem(5, 'high vegetation');
-		addClassificationItem(6, 'building');
-		addClassificationItem(7, 'low point(noise)');
-		addClassificationItem(8, 'key-point');
-		addClassificationItem(9, 'water');
-		addClassificationItem(12, 'overlap');
+		for (var classID in this.viewer.classifications) {
+			addClassificationItem(classID, this.viewer.classifications[classID].name);
+		}
 	}
 
 	initAccordion(){
@@ -839,7 +830,8 @@ export class Sidebar{
 			["EN", "en"],
 			["FR", "fr"],
 			["DE", "de"],
-			["JP", "jp"]
+                        ["JP", "jp"],
+                        ["SE", "se"]
 		];
 
 		let elLanguages = $('#potree_languages');
